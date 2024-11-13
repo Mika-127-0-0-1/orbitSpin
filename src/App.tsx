@@ -2,27 +2,19 @@ import React from "react";
 import { Canvas, useFrame, useLoader } from "@react-three/fiber";
 import { OrbitControls } from "@react-three/drei";
 import * as THREE from "three";
-// import getLayer from "./getLayer";
 
-// const bgSprites = getLayer({ 
-//   numSprites: 8, 
-//   radius: 10, 
-//   z: -10.5, 
-//   size: 24, 
-//   opacity: 0.2, 
-//   path: "./rad-grad.png" 
-// })
-
-function IcoSphere({ index }) {
+function IcoSphere({ index }: { index: number }) {
   // console.log(index);
-  const icoRef = React.useRef();
+  const icoRef = React.useRef<THREE.Points>(null);
 
   const offset = index * 0.005;
   let elapstTime = 0;
   useFrame((_, dTime) => {
     elapstTime += dTime * 0.1;
-    icoRef.current.rotation.x = elapstTime + offset;
-    icoRef.current.rotation.y = elapstTime + offset;
+    if(icoRef.current){
+      icoRef.current.rotation.x = elapstTime + offset;
+      icoRef.current.rotation.y = elapstTime + offset;
+    }
   });
 
   const icoGeo = new THREE.IcosahedronGeometry(2, 4);
